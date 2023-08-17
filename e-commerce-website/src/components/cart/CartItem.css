@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.cartList{
+    padding-top: 10px;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 2px 20px 0;
+}
+  
+
+.image{
+    height: 60px;
+    width: 60px;
+    position: relative;
+    right: 10px;
+    margin-right: 3px;
+}
+.title{
+    font-weight: 700;
+    position: relative;
+    right: 4rem;
+    top:5px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100px;
+}
+
+.itemPrice{
+    position: relative;
+    right: 5rem;
+    font-size: 20px;
+    top: 2rem;
+}
+.removeBtn{
+    height: 2rem;
+    border-radius: 15%;
+    width: 3rem;
+    font-size: 10px;
+    background-color: rgb(233, 81, 81);
+    margin-top: 1.5rem;
+}
+.quantity{
+    position:relative;
+    font-size:20px;
+    top: 2rem;
+    left: 2rem;
+    
+}
