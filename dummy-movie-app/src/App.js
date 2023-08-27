@@ -15,22 +15,25 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("https://react-dummy-movie-app-2d555-default-rtdb.firebaseio.com/movies.json");
       if(!response.ok){
         throw new Error('Something went wrong....Retrying');
       }
       const data = await response.json();
-
       
-      const transformedData = data.results.map(movieData => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date
-        }
-      })
-      setMovies(transformedData);
+      const loadedMovies = [];
+
+      for(const key in data){
+        loadedMovies.push({
+          id:key,
+          title:data[key].title,
+          openingText:data[key].openingText,
+          releaseDate:data[key].releaseDate,
+        })
+      }
+
+   
+      setMovies(loadedMovies);
       
     } catch(error){
       setError(error.message);
@@ -48,12 +51,47 @@ function App() {
   
   useEffect(() => {
     fetchMoviesHandler();
-  },[]);
+  },[fetchMoviesHandler]);
 
-  function addMovieHandler(movie) {
-    console.log(movie);
+  async function addMovieHandler(movie) {
+    const response =  await fetch("https://react-dummy-movie-app-2d555-default-rtdb.firebaseio.com/movies.json",{
+      method:'POST',
+      body: JSON.stringify(movie),
+      headers:{
+        'Content-type':'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
   }
 
+  async function onDeleteMovie(id){
+    try{
+      const movieData= await fetch(`https://react-dummy-movie-app-2d555-default-rtdb.firebaseio.com/movies/${id}.json//`, {
+        method: 'GET'
+    });
+    if(movieData.ok){
+      const movieDetails= await movieData.json();
+       let details= {
+          Title: movieDetails.title,
+          Opening_Text: movieDetails.openingText,
+          Release_Date: movieDetails.releaseDate
+        }
+        console.log(details);
+    }
+
+      const res= await fetch(`https://react-dummy-movie-app-2d555-default-rtdb.firebaseio.com/movies/${id}.json//`, {
+        method: 'DELETE'
+    });
+    if (res.ok) {
+      setMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== id));
+    } else {
+      throw new Error('Failed to Delete The Movie')
+    }
+    } catch(err){
+      setError(err.message);
+    }
+}
   const handleCancelRetry = () => {
     if (cancelLoadTimer) {
       clearTimeout(cancelLoadTimer);
@@ -64,7 +102,7 @@ function App() {
 
   let content = <p>Found no movies</p>
   if(movies.length > 0){
-    content = <MoviesList movies={movies} />
+    content = <MoviesList movies={movies} onDeleteHandler={onDeleteMovie} />
   }
   if(error){
     content = <p>{error}</p>
