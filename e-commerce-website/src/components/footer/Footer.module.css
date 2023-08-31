@@ -1,14 +1,14 @@
 footer{
-    position: relative;
+    
     display: flex;
     margin-top: 40px;
     padding: 20px;
     width: 100%;
-    left: 0;
-  bottom: 0;
     display:flex;
    
     background: #56CCF2;
+    justify-self: flex-end;
+    overflow-y: auto
 }
 footer .footer_title{
     text-align: center;

@@ -6,6 +6,8 @@ import Cart from './cart/Cart'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import About from './navbar/About'
 import Home from './navbar/Home';
+import ContactUs from './navbar/ContactUs';
+import ProductDetails from './pages/ProductDetails';
 
 const ListItems = () => {
     const [cartIsShown, setCartIsShown] = useState(false);
@@ -27,6 +29,8 @@ const ListItems = () => {
         <Route path='/' element={<Main />}/>
         <Route path='/home.html' element={<Home />} />
         <Route path='/about.html' element={<About/>}/>
+        <Route path='/contactUs' element={<ContactUs/>}/>
+        <Route path='/products/:id' element={<ProductDetails/>}/>
     </Routes>
     {cartIsShown && <Cart onClose={hideCartHandler}/>}
    <Footer />

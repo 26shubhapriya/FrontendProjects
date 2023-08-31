@@ -1,14 +1,11 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+
 .cartList{
     padding-top: 10px;
     height: 100px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 15px 2px 20px 0;
+    margin: 1rem;
 }
   
 
@@ -16,18 +13,23 @@
     height: 60px;
     width: 60px;
     position: relative;
-    right: 10px;
+    right: 3rem;
     margin-right: 3px;
 }
 .title{
-    font-weight: 700;
+    
     position: relative;
-    right: 4rem;
-    top:5px;
+    right: 5rem;
+    top: 0;
     display: flex;
     flex-wrap: wrap;
-    max-width: 100px;
+    max-width:6.8rem;
 }
+.title>h3{
+    font-weight: 700;
+    flex-wrap: wrap;
+    font-size: 1.4rem;
+} 
 
 .itemPrice{
     position: relative;
@@ -44,9 +46,10 @@
     margin-top: 1.5rem;
 }
 .quantity{
+    font-weight:700;
     position:relative;
     font-size:20px;
     top: 2rem;
-    left: 2rem;
+    left: 1rem;
     
 }
