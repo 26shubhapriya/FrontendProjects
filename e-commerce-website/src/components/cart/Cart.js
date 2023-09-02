@@ -19,7 +19,7 @@ const Cart = (props) => {
     <ul>
    {cart.map((product)=>(
         <CartItem key={product.id} imageUrl={product.imageUrl} title={product.title} price={product.price}
-        itemRemoveHandler={()=>removeItem(product.id)}/>
+        itemRemoveHandler={()=>removeItem(product.id,product._id)}/>
     ))}
     </ul>
 
