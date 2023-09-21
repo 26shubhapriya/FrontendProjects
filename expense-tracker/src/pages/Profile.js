@@ -1,5 +1,7 @@
-import React,{useState} from 'react'
+import React,{useEffect,useState} from 'react'
 import classes from "./Profile.module.css"
+import { BsGithub, BsGlobe } from "react-icons/bs";
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const [name,setName] = useState("");
@@ -7,7 +9,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError]= useState("");
 
-    const updateHandler=async(e)=>{
+    const updateHandler = async(e)=>{
         e.preventDefault();
         setLoading(true)
 
@@ -18,7 +20,6 @@ const Profile = () => {
                 idToken:localStorage.getItem("token"),
                 displayName:name,
                 photoUrl:profilePhoto,
-                deleteAttribute:["DISPLAY_NAME"],
                 returnSecureToken: true
               }),
               headers: {
@@ -29,66 +30,112 @@ const Profile = () => {
               if(res.ok){
                 setLoading(false);
                 const data= await res.json()
-                  localStorage.setItem("email", data.email.replace(/[@.]/g, ""));
-                  localStorage.setItem("token", data.idToken)
+                  
                   console.log(data)
                   //navigate('/home');
-                  console.log('User LoggedIn successfully');
-                  alert("Login successful!!")
+                  console.log('Profile data submitted successfully');
+                  
                 }
                 else{
                     setLoading(false);
                   const data= await res.json();
                     if(data && data.error.message){
-                      setError("LogIn not successful- " + data.error.message)
+                      setError("Profile not updated successful- " + data.error.message)
                     } else{
                       setError("Some error occured!! Please try again..")
                     }
                   }
             } catch (error) {
-              console.error('Error logging in :', error);
+              console.error('Error in profile updation :', error);
             }
+            setName("");
+            setProfilePhoto("");
     }
+
+    useEffect(()=>{
+      const fetchData = async() => {
+        try{
+            const token = localStorage.getItem('token');
+            const res = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAQbV4cXjb3Nm3jQAjQ2k3wxpnwKjoqVY0",{
+              method:'POST',
+              body:JSON.stringify({
+                idToken:token
+              }),
+              headers:{
+                'content-type': 'application/json'
+              }
+            })
+            if(res.ok){
+              const data = await res.json()
+              console.log(data)
+              setName(data.users[0].displayName);
+              setProfilePhoto(data.users[0].photoUrl);
+              console.log('Data fetch success');
+              return data;
+            }
+            else{
+                const data = await res.json();
+                if(data && data.error.message){
+                  setError("Profile not updated" + data.error.message)
+                }else{
+                  setError("some error occurred!! Please try again..")
+                }
+            }
+        }
+        catch(error){
+          console.error('Error in profile updation:' ,+ error )
+
+        }
+      }
+      fetchData();
+    },[])
 
   return (
     <>
-    <h1>This is my User Profile</h1>
-    <div>
+     <div className={classes.topText}>
         <div>Winners never quit, quitters never win</div>
-        <div>Your profile is 60% complete.</div>
-        <hr />
-        <div className={classes.container}>
-        <form>
-        <h1>Contact Details</h1>
-        <div className={classes.form}> 
-        <label htmlFor='name'>Full Name: </label>
-        <input
-        type="text"
-        id='name'
-        placeholder="Enter Your full name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      </div>
-       <div>
-       <label htmlFor='name'>Profile Photo URL: </label>
-        <input
-        type="text"
-        id='profilePhoto'
-        placeholder="Your profile photo URL..."
-        value={profilePhoto}
-        onChange={(e) => setProfilePhoto(e.target.value)}
-        required
-      />
-       </div>
-       <p className={classes.errorMessage}>{error}</p>
-       <button type='submit' onClick={updateHandler}>Update</button>
-       {loading && <h2>Submitting Data...</h2>}
-
-        </form>
+        <div className={classes.profileInfo}>Your profile is 60% complete. A Complete Profile has a higher chance of landing a job. <Link to="">Complete Now</Link></div>
         </div>
-    </div>
+        <hr />
+        <div className={classes['profile-form-container']}>
+        <h2 className={classes.title}>Contact Details</h2>
+        <div className={classes.inputs}>
+        <div className={classes['input-container']}>
+          <label htmlFor="fullName" className={classes.label}>
+            <BsGithub/> Full Name: 
+          </label>
+          <input
+            type="text"
+            id="fullName"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
+            className={classes.input}
+          />
+        </div>
+        <div className={classes['input-container']}>
+          <label htmlFor="photoUrl" className={classes.label}>
+           <BsGlobe/> Profile Photo URL
+          </label>
+          <input
+            type="text"
+            id="photoUrl"
+            value={profilePhoto}
+            onChange={(e)=>setProfilePhoto(e.target.value)}
+            className={classes.input}
+          />
+        </div>
+        </div>
+        <hr/>
+        <p className={classes.errorMessage}>{error}</p>
+        {!loading && <button className={classes['update-button']} onClick={updateHandler}>
+          Update
+          </button>}
+          <button className={classes['cancel-button']}>
+          Cancel
+          </button>
+          {loading && <h2>Submitting Data...</h2>}
+      </div>
+    
     </>
   )
 }

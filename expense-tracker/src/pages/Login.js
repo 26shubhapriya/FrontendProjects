@@ -33,12 +33,12 @@ const Login = () => {
             if(res.ok){
                 setLoading(false);
                 const data= await res.json()
-                  localStorage.setItem("email", data.email.replace(/[@.]/g, ""));
-                  localStorage.setItem("token", data.idToken)
-                  console.log(data)
+                 // localStorage.setItem("email", data.email.replace(/[@.]/g, ""));
+                 localStorage.setItem("email",email);
+                  localStorage.setItem("token", data.idToken); 
                   navigate('/home');
                   console.log('User LoggedIn successfully');
-                  alert("Login successful!!")
+                 
                 }
                 else{
                     setLoading(false);
@@ -74,10 +74,10 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <p className={classes.errorMessage}>{error}</p>
-                <button type="submit">Login</button>
+                {!loading && <button type="submit">Login</button>}
                 {loading && <h2>Submitting Data...</h2>}
                 <div className={classes.forgotPasswordLink}>
-                  <a href="/forgot-password">Forgot Password?</a>
+                <Link to="/forgetpassword">Forgot Password?</Link>
                 </div>
                 <div className={classes.signupLink}>
                   <Link to="/"><p>Don't have an account? Sign Up.</p></Link>

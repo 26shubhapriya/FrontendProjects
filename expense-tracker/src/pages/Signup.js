@@ -44,9 +44,9 @@ const Signup =() =>{
         else{
             const data= await res.json();  //in case the POST method fails, catch the response like this
             if(data && data.error.message){
-              alert("SignUp not successful- " + data.error.message)
+              setError("SignUp not successful- " + data.error.message)
             } else{
-              alert("Some error occured!! Please try again..")
+              setError("Some error occured!! Please try again..")
             }
         }
     }catch(error){
@@ -67,7 +67,7 @@ const Signup =() =>{
                 <input type="password" placeholder='Password' value = {password} onChange={(e) => setPassword(e.target.value)} required />
                 <input type="password" placeholder='Re-type Password' value={confirmPassword}  onChange={(e) => setConfimrPassword(e.target.value)} required />
                 <p className={classes.errorMessage}>{error}</p>
-                <button type="submit">Sign Up</button> 
+                {!loading && <button type="submit">Sign Up</button> }
                 
             </form>
             <div className={classes.loginLink}>
