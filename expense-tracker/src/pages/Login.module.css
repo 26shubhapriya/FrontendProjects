@@ -3,9 +3,9 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to bottom right, #74ebd5, #ACB6E5);
+    background: linear-gradient(to bottom right, #4539eb,#74ebd5);
   }
-
+  
   .loginForm {
     background-color: #fff;
     padding: 30px;
@@ -14,12 +14,12 @@
     width: 350px;
     text-align: center;
   }
-
+  
   .loginForm h2 {
     color: #333;
     margin-bottom: 20px;
   }
-
+  
   .loginForm input {
     width: 100%;
     padding: 12px;
@@ -29,7 +29,7 @@
     background-color: #f7f7f7;
     color: #333;
   }
-
+  
   .loginForm button {
     background-color: #74ebd5;
     color: white;
@@ -40,24 +40,25 @@
     font-weight: bold;
     transition: background-color 0.3s ease-in-out;
   }
-
+  
   .loginForm button:hover {
     background-color: #50c9ba;
   }
-
+  
   .loginForm .forgotPasswordLink {
     margin-top: 10px;
     color: #888;
   }
-
+  
   .loginForm .forgotPasswordLink a,
   .loginForm .signupLink a {
     color: #47c4ad;
     text-decoration: none;
     transition: color 0.3s ease-in-out;
   }
-
+  
   .loginForm .forgotPasswordLink a:hover,
   .loginForm .signupLink a:hover {
     color: #50c9ba;
   }
+  

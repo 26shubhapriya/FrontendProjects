@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import classes from './ForgetPassword.module.css';
+import classes from "./ForgetPassword.module.css";
 
 const ForgetPassword = () => {
-  const [email, setEmail]= useState("")
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError]= useState("");
+  const [error, setError] = useState("");
 
   const passwordChangeHandler = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAQbV4cXjb3Nm3jQAjQ2k3wxpnwKjoqVY0",
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBMVblYc-kgZPBCYozHEju1An9kxNT_kdM",
       {
         method: "POST",
         body: JSON.stringify({
@@ -25,44 +25,56 @@ const ForgetPassword = () => {
       }
     )
       .then((response) => {
-        setLoading(false)
+        setLoading(false);
         if (response.ok) {
           response.json().then((data) => {
             console.log(data);
-            alert("Password reset request sent")
-          })
+            alert("Password reset request sent");
+          });
         } else {
           response.json().then((data) => {
-            if(data && data.error.message){
-                setError("SignUp not successful- " + data.error.message)
-              } else{
-                setError("Some error occured!! Please try again..")
-              }
+            if (data && data.error.message) {
+              setError("SignUp not successful- " + data.error.message);
+            } else {
+              setError("Some error occured!! Please try again..");
+            }
           });
         }
-      }).catch((err) => {
-        console.log("Reset Password request not sent - " +err.message);
+      })
+      .catch((err) => {
+        console.log("Reset Password request not sent - " + err.message);
       });
-      setEmail("");
+    setEmail("");
   };
   return (
     <>
-    <div>
-      <form className={classes.form}>
-        <h2>Forgot Password?</h2>
-        <i>Enter your registered email.</i>
-        <div className={classes.body}>
-          <input type="email" id="email" placeholder="Enter Registered Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        </div>
-        <p className={classes.errorMessage}>{error}</p>
-        {!loading && <button type="submit" onClick={passwordChangeHandler} className={classes.btn}>
-          Send link
-        </button>}
-        <p className={classes.para}>
-          Already a user? <Link to="/login">Login</Link>
-        </p>
-        {loading && <h2>Submitting Data...</h2>}
-      </form>
+      <div>
+        <form className={classes.form}>
+          <h2>Forgot Password?</h2>
+          <i>Enter your registered email.</i>
+          <div className={classes.body}>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter Registered Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <p className={classes.errorMessage}>{error}</p>
+          {!loading && (
+            <button
+              type="submit"
+              onClick={passwordChangeHandler}
+              className={classes.btn}>
+              Send link
+            </button>
+          )}
+          <p className={classes.para}>
+            Already a user? <Link to="/login">Login</Link>
+          </p>
+          {loading && <h2>Submitting Data...</h2>}
+        </form>
       </div>
     </>
   );

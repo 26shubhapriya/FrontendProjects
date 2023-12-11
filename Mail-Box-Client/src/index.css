@@ -1,0 +1,53 @@
+* {
+  margin-top: 0%;
+}
+body {
+  background: url("night.jpg") center center cover no-repeat fixed;;
+  /* background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: 100%; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.form {
+  background: transparent !important;
+  border: 1px solid #000 !important;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+  margin-bottom: 12vh;
+}
+.form input {
+  background: inherit;
+  border-width: 1px 0px;
+  border-top-width: 0cap;
+  border-color: black;
+}
+.form input:focus {
+  background: transparent;
+  border-bottom: 1px solid black;
+  box-shadow: none;
+  color: currentColor;
+}
+
+.form input::selection {
+  background: rgb(149, 214, 217);
+}
+.form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px inherit inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.day {
+  background-image: url("Day.jpg");
+  color: rgb(4, 4, 4) !important;
+  background-size: 150% 100%;
+}
+.night {
+  background-image: url("night.jpg");
+  color: antiquewhite !important;
+  background-size: 100% 100%;
+}
